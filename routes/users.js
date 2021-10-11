@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const userService = require('../controllers/mysqlConfig');
 
-router.prefix('/users')
+//router.prefix('/users')
 
 //获取所有用户(GET请求)
 router.get('/', async (ctx, next) => {
@@ -10,7 +10,7 @@ router.get('/', async (ctx, next) => {
 })
 
 // 增加用户(POST请求)
-router.post('/add', async (ctx, next) => {
+router.post('/users', async (ctx, next) => {
   let arr = [];
 
   arr.push(ctx.request.body['name']);
@@ -32,5 +32,45 @@ router.post('/add', async (ctx, next) => {
           }
       })
 })
+//delete a user
+router.delete('/users/:id', async (ctx, next) => {
+  let arr = [];
 
+  arr.push(ctx.request.body['id']);
+  await userService.deleteUserData(arr)
+      .then((data) => {
+          let r = '';
+          if (data.affectedRows != 0) {
+              r = 'ok';
+          }
+          ctx.body = {
+              data: r
+          }
+      }).catch(() => {
+          ctx.body = {
+              data: 'err'
+          }
+      })
+})
+
+//update a user
+router.put('/users/:id', async (ctx, next) => {
+  let arr = [];
+
+  arr.push(ctx.request.body['id']);
+  await userService.updateUserData(arr)
+      .then((data) => {
+          let r = '';
+          if (data.affectedRows != 0) {
+              r = 'ok';
+          }
+          ctx.body = {
+              data: r
+          }
+      }).catch(() => {
+          ctx.body = {
+              data: 'err'
+          }
+      })
+})
 module.exports = router
