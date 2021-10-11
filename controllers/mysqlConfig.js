@@ -42,6 +42,14 @@ let allServices = {
          let _sql = "insert into users set name=?,pass=?,avator=?;"
          return allServices.query(_sql, obj)
      },
+    updateUserData: (obj) => {
+		 let _sql = "update users set name=? where id=?;"
+		 return allServices.query(_sql, obj)
+	     },
+    deleteUserData: (obj) => {
+		 let _sql = "delete users where id=?;"
+		 return allServices.query(_sql, obj)
+	     },
 }
 
 module.exports = allServices;
