@@ -57,6 +57,7 @@ router.delete('/users/:id', async (ctx, next) => {
 router.put('/users/:id', async (ctx, next) => {
   let arr = [];
 
+  arr.push(ctx.request.body['name']);
   arr.push(ctx.request.body['id']);
   await userService.updateUserData(arr)
       .then((data) => {
